@@ -9,9 +9,9 @@ on:
 jobs:
   create_release:
     runs-on: ubuntu-latest
-    name: Create Release
     permissions:
       contents: write
+      pull-requests: write
     steps:
       - name: Run Release Drafter
         uses: release-drafter/release-drafter@v5
