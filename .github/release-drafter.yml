@@ -28,6 +28,4 @@ autolabeler:
       - '/feat/i'
 exclude-labels:
   - 'skip-changelog'
-exclude-contributors:
-  - 'fcying'
 
