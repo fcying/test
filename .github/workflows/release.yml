@@ -13,18 +13,21 @@ jobs:
       contents: write
       pull-requests: write
     steps:
-      - name: Run Release Drafter
-        id: release_drafter
-        uses: release-drafter/release-drafter@v5
-        with:
-          config-name: release-drafter.yml
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - uses: actions/checkout@v4
-      - uses: ncipollo/release-action@v1
+
+      # - name: Run Release Drafter
+      #   id: release_drafter
+      #   uses: release-drafter/release-drafter@v5
+      #   with:
+      #     config-name: release-drafter.yml
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Update latest
+        uses: ncipollo/release-action@v1
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          tag: ${{ steps.release_drafter.outputs.tag_name }}
-          artifacts: "a.txt"
-          allowUpdates: true
+          tag: test
+          artifactErrorsFailBuild: true
+          generateReleaseNotes: true
+          name: test version ${{ env.COMMIT }}
           draft: true
