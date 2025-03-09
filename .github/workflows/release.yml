@@ -23,11 +23,17 @@ jobs:
       #   env:
       #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Setup Node
+        uses: actions/setup-node@v3
+
+      - name: Install release-please
+        run: npm install -g release-please
+
       - name: Update latest
-        uses: ncipollo/release-action@v1
-        with:
-          tag: test
-          artifactErrorsFailBuild: true
-          generateReleaseNotes: true
-          name: test version ${{ env.COMMIT }}
-          draft: true
+        run: |
+          release-please github-release \
+          --token=${{ secrets.GITHUB_TOKEN }} \
+          --repo-url=${{ github.repository }} \
+          --release-type go \
+          --default-branch master \
+          --draft
