@@ -7,33 +7,14 @@ on:
     types: [opened, reopened, synchronize]
 
 jobs:
-  create_release:
-    runs-on: ubuntu-latest
-    permissions:
-      contents: write
-      pull-requests: write
+  test:
+    runs-on: windows-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions-rust-lang/setup-rust-toolchain@v1
+      - run: |
+          # git clone https://github.com/fcying/atuin.git
+          git clone https://github.com/atuinsh/atuin.git
+          cd atuin/crates/atuin
+          cargo install --locked --path .
 
-      # - name: Run Release Drafter
-      #   id: release_drafter
-      #   uses: release-drafter/release-drafter@v5
-      #   with:
-      #     config-name: release-drafter.yml
-      #   env:
-      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Setup Node
-        uses: actions/setup-node@v3
-
-      - name: Install release-please
-        run: npm install -g release-please
-
-      - name: Update latest
-        run: |
-          release-please github-release \
-          --token=${{ secrets.GITHUB_TOKEN }} \
-          --repo-url=${{ github.repository }} \
-          --release-type go \
-          --default-branch master \
-          --draft
+          # cargo install --locked atuin
